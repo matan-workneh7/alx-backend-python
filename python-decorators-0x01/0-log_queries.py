@@ -5,7 +5,7 @@ import functools
 def log_queries(func):
     def wrapper(*args, **kwargs):
         query = kwargs.get("query")
-        print(f"SQL query: {query}")
+        print(f" SQL query: {query}")
         result = func(*args, **kwargs)
         return result
     return wrapper
