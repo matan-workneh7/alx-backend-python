@@ -3,7 +3,7 @@ import sqlite3
 import functools
 
 #### paste your with_db_decorator here
-def with_db_connection(func):# this function accepts the 
+def with_db_connection(func):
     @functools.wraps(func)
     def Wrapper(*args, **kwargs):
         conn = sqlite3.connect("users.db")
@@ -11,7 +11,7 @@ def with_db_connection(func):# this function accepts the
         return result
     return Wrapper
 
-def retry_on_failure(retries=3, delay=1): #this accepts the function with the db connection parameter func right? but how will it take the retries and delays kwargs if the withdb function (func) only takes the conn
+def retry_on_failure(retries=3, delay=1):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
