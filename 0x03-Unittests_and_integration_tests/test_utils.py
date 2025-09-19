@@ -8,7 +8,7 @@ from utils import access_nested_map
 class TestAccessNestedMap(unittest.TestCase):
     """Unit tests for the access_nested_map function."""
 
-    #  Valid path tests
+    # Valid path tests
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
@@ -20,13 +20,14 @@ class TestAccessNestedMap(unittest.TestCase):
 
     # Exception tests
     @parameterized.expand([
-        ({}, ("a",), "a"),
-        ({"a": 1}, ("a", "b"), "b"),
+        ({}, ("a",), "'a'"),
+        ({"a": 1}, ("a", "b"), "'b'"),
     ])
     def test_access_nested_map_exception(self, nested_map, path, expected_key):
         """Test that KeyError is raised for invalid paths."""
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
+        # str(context.exception) includes quotes, so expected_key must include quotes
         self.assertEqual(str(context.exception), expected_key)
 
 
