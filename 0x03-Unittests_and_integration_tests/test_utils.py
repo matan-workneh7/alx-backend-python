@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import unittest
+from unittest.mock import patch, Mock
 from parameterized import parameterized
-from utils import access_nested_map
+from utils import access_nested_map, get_json 
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -30,6 +31,17 @@ class TestAccessNestedMap(unittest.TestCase):
         # str(context.exception) includes quotes, so expected_key must include quotes
         self.assertEqual(str(context.exception), expected_key)
 
+class TestGetJson(unittest.TestCase):
+    """Unit tests for the get_json function."""
+
+    @patch("utils.requests.get")
+    def test_get_json(self, mock_get):
+        """Test get_json returns expected payload and calls requests.get correctly."""
+
+        test_cases = [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ]
 
 if __name__ == "__main__":
     unittest.main()
