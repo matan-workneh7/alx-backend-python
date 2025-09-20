@@ -34,25 +34,26 @@ class TestAccessNestedMap(unittest.TestCase):
 class TestGetJson(unittest.TestCase):
     """Unit tests for the get_json function."""
 
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
     @patch("utils.requests.get")
-    def test_get_json(self, mock_get):
-        """Test get_json returns expected payload and calls requests.get correctly."""
+    def test_get_json(self, test_url, test_payload, mock_get):
+        """Test that get_json returns the expected payload and calls requests.get once."""
 
-        test_cases = [
-            ("http://example.com", {"payload": True}),
-            ("http://holberton.io", {"payload": False}),
-        ]
+        # Creating a fake response with .json() returning test_payload
+        mock_response = Mock()
+        mock_response.json.return_value = test_payload
+        mock_get.return_value = mock_response
 
-        for url, payload in test_cases:
-            with self.subTest(url=url, payload=payload):
-                fake_response = Mock()
-                fake_response.json.return_value = payload
-                mock_get.return_value = fake_response
-    
-                result = get_json(url)
-    
-                mock_get.assert_called_with(url)
-                self.assertEqual(result, payload)
+        # Calling the function
+        result = get_json(test_url)
+
+        #and Assertions
+        mock_get.assert_called_once_with(test_url)
+        self.assertEqual(result, test_payload)
+
 
 if __name__ == "__main__":
     unittest.main()
