@@ -43,5 +43,13 @@ class TestGetJson(unittest.TestCase):
             ("http://holberton.io", {"payload": False}),
         ]
 
+        for url, payload in test_cases:
+            fake_response = Mock()
+            fake_response.json.return_value = payload
+            mock_get.return_value = fake_response
+            result = get_json(url)
+            mock_get.assert_called_with(url)
+            self.assertEqual(result, payload)
+
 if __name__ == "__main__":
     unittest.main()
