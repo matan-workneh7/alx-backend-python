@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Unit tests for the utils module."""
 
 import unittest
 from unittest.mock import patch, Mock
@@ -28,8 +29,11 @@ class TestAccessNestedMap(unittest.TestCase):
         """Test that KeyError is raised for invalid paths."""
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
-        # str(context.exception) includes quotes, so expected_key must include quotes
-        self.assertEqual(str(context.exception), expected_key)
+        self.assertEqual(
+            str(context.exception),
+            expected_key
+        )
+
 
 class TestGetJson(unittest.TestCase):
     """Unit tests for the get_json function."""
@@ -40,19 +44,19 @@ class TestGetJson(unittest.TestCase):
     ])
     @patch("utils.requests.get")
     def test_get_json(self, test_url, test_payload, mock_get):
-        """Test that get_json returns the expected payload and calls requests.get once."""
-
-        # Creating a fake response with .json() returning test_payload
+        """Test that get_json returns the expected payload
+        and calls requests.get once.
+        """
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         mock_get.return_value = mock_response
 
-        # Calling the function
         result = get_json(test_url)
 
-        #and Assertions
+        # and Assertions
         mock_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
 
 class TestMemoize(unittest.TestCase):
     """Unit tests for the memoize decorator."""
@@ -61,16 +65,19 @@ class TestMemoize(unittest.TestCase):
         """Test that memoize caches the result of a method."""
 
         class TestClass:
+            """Helper class to test memoization."""
+
             def a_method(self):
                 return 42
-            
+
             @memoize
             def a_property(self):
                 return self.a_method()
-        object = TestClass()
+
+        obj = TestClass()
         with patch.object(TestClass, 'a_method', return_value=42) as mock_method:
-            result1 = object.a_property
-            result2 = object.a_property
+            result1 = obj.a_property
+            result2 = obj.a_property
 
             self.assertEqual(result1, 42)
             self.assertEqual(result2, 42)
