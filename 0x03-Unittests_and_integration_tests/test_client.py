@@ -22,10 +22,11 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch("client.get_json")
     def test_org(self, org_name, mock_get_json):
         """Test GithubOrgClient.org returns correct value."""
-        mock_get_json.return_value = {"org": org_name}
+        fake_payload = {"org": org_name}
+        mock_get_json.return_value = fake_payload
         client = GithubOrgClient(org_name)
         result = client.org()
-        self.assertEqual(result, {"org": org_name})
+        self.assertEqual(result, fake_payload)
         mock_get_json.assert_called_once()
 
     def test_public_repos_url(self):
@@ -110,3 +111,6 @@ class MockResponse:
 
     def json(self):
         return self._payload
+
+if __name__ == "__main__":
+    unittest.main()
