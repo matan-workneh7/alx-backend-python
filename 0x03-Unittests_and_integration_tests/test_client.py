@@ -25,7 +25,7 @@ class TestGithubOrgClient(unittest.TestCase):
         fake_payload = {"org": org_name}
         mock_get_json.return_value = fake_payload
         client = GithubOrgClient(org_name)
-        result = client.org()
+        result = client.org
         self.assertEqual(result, fake_payload)
         mock_get_json.assert_called_once()
 
