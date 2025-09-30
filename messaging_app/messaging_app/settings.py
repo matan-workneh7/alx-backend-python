@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.JWTAuthentication', #Will ask for the JWT token
+        'rest_framework_simplejwt.authentication.JWTAuthentication', #Will ask for the JWT token
         'rest_framework.authentication.BasicAuthentication', #This will ask for basic auth like username and password
         'rest_framework.authentication.SessionAuthentication', #This is for session authentication like login through the admin panel
     ],
