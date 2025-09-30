@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     
     'chats',    
 ]
-    
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -138,7 +138,8 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.JWTAuthentication', #Will ask for the JWT token
-        'rest_framework.authentication.SessionAuthentication', #This will be for fallback
+        'rest_framework_simplejwt.authentication.BasicAuthentication', #This will ask for basic auth like username and password
+        'rest_framework.authentication.SessionAuthentication', #This is for session authentication like login through the admin panel
     ],
 }
 
