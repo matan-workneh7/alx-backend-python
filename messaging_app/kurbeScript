@@ -1,19 +1,28 @@
 #!/bin/bash
-echo "starting Kubernetes cluster using MiniKube Cluster..."
 
-#starting MiniKube using Docker
+echo "Starting Kubernetes cluster using Minikube..."
+
+if minikube status | grep -q "host: Running"; then
+    echo "✅ Minikube is already running!"
+else
+    minikube start --driver=docker
+fi
+
+echo "Starting Kubernetes cluster using Minikube..."
+
+# Starting Minikube using Docker
 minikube start --driver=docker
 
-#checking if MiniKube started
+# Checking if Minikube started
 if [ $? -ne 0 ]; then
-	echo "Failed to start MiniKube Cluster."
+	echo "Failed to start Minikube Cluster."
 	exit 1
 fi
 
-echo "MiniKube started successfully!"
+echo "Minikube started successfully!"
 echo "Checking cluster info..."
 
-kubectl cluster -info
+kubectl cluster-info
 
 if [ $? -ne 0 ]; then
 	echo "Failed to retrieve cluster info."
@@ -23,8 +32,8 @@ fi
 echo "Checking on node status..."
 kubectl get nodes
 
-#listing all pods
-echo "Listing all pods in all namespace..."
+# Listing all pods
+echo "Listing all pods in all namespaces..."
 kubectl get pods --all-namespaces
 
 echo "Kubernetes local cluster setup complete!"
