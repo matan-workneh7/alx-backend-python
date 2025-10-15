@@ -1,15 +1,5 @@
 #!/bin/bash
 
-echo "Starting Kubernetes cluster using Minikube..."
-
-if minikube status | grep -q "host: Running"; then
-    echo "✅ Minikube is already running!"
-else
-    minikube start --driver=docker
-fi
-
-echo "Starting Kubernetes cluster using Minikube..."
-
 # Starting Minikube using Docker
 minikube start --driver=docker
 
