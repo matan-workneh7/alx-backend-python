@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Run the Django server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
