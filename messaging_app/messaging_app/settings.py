@@ -142,10 +142,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication', #This is for session authentication like login through the admin panel
     ],
 
-    'DEFAULT_PAGINATION_CLASS': [
-        'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE': 20,
-    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
 }
 
 # this setting will be specific to JWT
